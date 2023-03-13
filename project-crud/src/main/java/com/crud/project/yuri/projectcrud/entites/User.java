@@ -1,7 +1,5 @@
 package com.crud.project.yuri.projectcrud.entites;
-
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
 @Entity
