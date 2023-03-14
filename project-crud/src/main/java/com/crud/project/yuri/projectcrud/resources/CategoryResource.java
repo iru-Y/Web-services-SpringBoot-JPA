@@ -1,28 +1,30 @@
 package com.crud.project.yuri.projectcrud.resources;
 
-import com.crud.project.yuri.projectcrud.entites.Order;
-import com.crud.project.yuri.projectcrud.services.OrderService;
+import com.crud.project.yuri.projectcrud.entites.Category;
+import com.crud.project.yuri.projectcrud.services.CategoryService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
-@RequestMapping( value = "/orders")
-public class OrderResource {
+@RequestMapping("/categories")
+public class CategoryResource {
     @Autowired
-    private OrderService orderService;
+   CategoryService categoryService;
     @GetMapping
-    public ResponseEntity<List<Order>> findAll(){
-        List<Order> list = orderService.findAll();
+    public ResponseEntity<List<Category>> findAll(){
+        List<Category> list = categoryService.findByAll();
         return ResponseEntity.ok().body(list);
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Order> findById(@PathVariable Long id){
-        Order order = orderService.findById(id);
-        return ResponseEntity.ok().body(order);
+    public ResponseEntity<Category> findById (@PathVariable Long id){
+        Category category = categoryService.findByID(id);
+        return ResponseEntity.ok().body(category);
     }
 }
