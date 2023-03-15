@@ -2,12 +2,15 @@ package com.crud.project.yuri.projectcrud.entites;
 
 import com.crud.project.yuri.projectcrud.entites.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -23,6 +26,8 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     private Order(){
 
@@ -65,6 +70,14 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Set<OrderItem> getItems() {
+        return orderItems;
+    }
+
+    public void setItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.crud.project.yuri.projectcrud.entites;
 
 import com.crud.project.yuri.projectcrud.entites.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
     private final static Long serialVersionUID = 1l;
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id = new OrderItemPk();
 
     private Integer quantity;
     private Double price;
@@ -42,6 +43,7 @@ public class OrderItem implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
