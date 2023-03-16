@@ -2,11 +2,14 @@ package com.crud.project.yuri.projectcrud.services;
 
 import com.crud.project.yuri.projectcrud.entites.User;
 import com.crud.project.yuri.projectcrud.repositories.UserRepository;
+import com.crud.project.yuri.projectcrud.services.exceptions.DataBaseException;
 import com.crud.project.yuri.projectcrud.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,13 @@ public class UserService {
         return userRepository.save(user);
     }
     public void delete(Long id){
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataBaseException(e.getMessage());
+        }
     }
     public User update(Long id, User user){
 
